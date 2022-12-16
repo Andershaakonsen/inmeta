@@ -1,3 +1,5 @@
 import { classed } from "@tw-classed/react";
 
-export const Button = classed.button("bg-blue-500 text-white p-2 rounded");
+export const Button = classed.button(
+  "flex items-center justify-center transition-all relative border  text-base px-2 py-1"
+);
