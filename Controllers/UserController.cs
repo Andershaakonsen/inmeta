@@ -32,7 +32,7 @@ public class UserController : ControllerBase
 
     [HttpGet]
     [Authorize]
-    public async Task<ActionResult<ServiceResponse<User>>> GetUser()
+    public async Task<ActionResult<ServiceResponse<GetUserDto>>> GetUser()
     {
         var userId = HttpContext.User.Claims.First(i => i.Type == ClaimTypes.NameIdentifier).Value;
         return Ok(await _userService.GetUser(Int32.Parse(userId)));

@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
-import { createContext } from "vm";
 import React from "react";
-import { IUser } from "src/types/api";
+import { IUser, ServiceResponse } from "src/types/api";
 import { authFetch } from "src/features/auth/auth.fetcher";
 
 interface IAuthContext {
@@ -34,8 +33,11 @@ export const AuthProvider = ({ children }: any) => {
 
   useEffect(() => {
     if (!token) return;
-    authFetch<IUser>("/api/User")
-      .then((user) => setUser(user))
+    authFetch<ServiceResponse<IUser>>("/api/User")
+      .then((res) => {
+        if (!res.success) throw new Error("Unauthorized");
+        setUser(res.data);
+      })
       // If token fails, i.e expired, logout
       .catch(() => {
         setToken(null);

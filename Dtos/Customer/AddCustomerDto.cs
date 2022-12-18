@@ -2,6 +2,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace inmeta.Dtos.Customer;
 
+#nullable disable
+
 public class AddCustomerDto
 {
     [Required]

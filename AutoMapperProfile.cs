@@ -12,6 +12,7 @@ public class AutoMapperProfile : Profile
     {
         //User Mappings
         CreateMap<AddUserDto, User>();
+        CreateMap<User, GetUserDto>();
 
         //Customer Mappings
         CreateMap<AddCustomerDto, Customer>();

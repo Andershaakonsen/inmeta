@@ -1,5 +1,6 @@
 namespace inmeta.Models;
 
+#nullable disable
 public class Order
 {
     public int Id { get; set; }

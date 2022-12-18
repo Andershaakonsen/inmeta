@@ -2,6 +2,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace inmeta.Dtos.Order;
 
+#nullable disable
+
 public class AddOrderDto
 {
     [Required]

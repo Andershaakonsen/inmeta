@@ -14,7 +14,7 @@ public interface IUserService
 {
     Task<ServiceResponse<String>> Register(AddUserDto user);
     Task<ServiceResponse<String>> Login(LoginUserDto user);
-    Task<ServiceResponse<User>> GetUser(int userId);
+    Task<ServiceResponse<GetUserDto>> GetUser(int userId);
     // String er token
     // Task<ServiceResponse<String>> Register(AddUserDto user);
 }
@@ -32,13 +32,19 @@ public class UserService : IUserService
         _configuration = configuration;
     }
 
-    public async Task<ServiceResponse<User>> GetUser(int userId)
+    public async Task<ServiceResponse<GetUserDto>> GetUser(int userId)
     {
-        var response = new ServiceResponse<User>();
+        var response = new ServiceResponse<GetUserDto>();
         try
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
-            response.Data = user;
+            if (user == null)
+            {
+                response.Success = false;
+                response.Message = "Could not find user in database";
+                return response;
+            }
+            response.Data = _mapper.Map<GetUserDto>(user);
             response.Message = "User Succesfully found in db";
             return response;
         }
@@ -55,19 +61,22 @@ public class UserService : IUserService
         var response = new ServiceResponse<string>();
         try
         {
-            System.Console.WriteLine("User email from client" + user.Email);
-            //Fjern dette senere, security breach!
+            //Legge til validering
             var dbUser = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
             if (dbUser == null)
             {
-                response.Message = "Email ikke funnet!";
+                response.Message = "Invalid Credentials";
+                response.Success = false;
                 return response;
-
-                //Bytt ut med denne!
-                // throw new NullReferenceException("dbUser");
             }
 
-            //Kan lage som mange du vil!!
+            if (!BCrypt.Net.BCrypt.Verify(user.Password, dbUser.Password))
+            {
+                response.Message = "Invalid Credentials";
+                response.Success = false;
+                return response;
+            }
+
             var token = CreateToken(dbUser);
             response.Data = token;
             response.Message = "Succesfully generated token!";

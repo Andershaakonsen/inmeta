@@ -1,5 +1,6 @@
 namespace inmeta.Dtos.Order;
 
+#nullable disable
 public class GetOrderDto
 {
     public int Id { get; set; }

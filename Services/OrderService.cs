@@ -108,7 +108,7 @@ public class OrderService : IOrderService
             }
 
             response.Data = dbOrders.Select(o => _mapper.Map<GetOrderDto>(o)).ToList();
-            response.Message = "Successfully fetched all orders from db1";
+            response.Message = "Successfully fetched all orders from db";
             return response;
         }
         catch (Exception e)
@@ -124,8 +124,6 @@ public class OrderService : IOrderService
         var response = new ServiceResponse<GetOrderDto>();
         try
         {
-            System.Console.WriteLine("Order Id:" + order.Id);
-            System.Console.WriteLine("User Id:" + userId);
             var dbOrder = await _context.Orders.FirstOrDefaultAsync(
                 o => o.Id == order.Id && o.UserId == userId
             );
@@ -135,7 +133,7 @@ public class OrderService : IOrderService
                 response.Success = false;
                 return response;
             }
-            //Can do it manually
+            //Converts dbOrder variable to order
             _mapper.Map(order, dbOrder);
             await _context.SaveChangesAsync();
             response.Data = order;

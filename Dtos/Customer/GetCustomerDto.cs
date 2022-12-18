@@ -1,5 +1,7 @@
 namespace inmeta.Dtos.Customer;
 
+#nullable disable
+
 public class GetCustomerDto
 {
     public int Id { get; set; }
