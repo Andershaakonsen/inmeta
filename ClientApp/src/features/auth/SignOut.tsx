@@ -1,9 +1,11 @@
 import React from "react";
 import { Button } from "src/components";
-import { useSetToken } from "src/context/AuthContext";
+import { useSetToken, useToken } from "src/context/AuthContext";
 
 const SignOut = () => {
+  const token = useToken();
   const setToken = useSetToken();
+  if (!token) return null;
   return (
     <div className="w-full flex justify-end">
       <Button

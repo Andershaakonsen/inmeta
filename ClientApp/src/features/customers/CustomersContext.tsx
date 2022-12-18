@@ -9,7 +9,6 @@ interface ICustomersContext {
   fetchCustomers: () => void;
 }
 
-//Hvorfor undefined!, ta opp dette på mock interview!
 export const CustomersContext = React.createContext<ICustomersContext>(null!);
 
 export const CustomersProvider = ({ children }: any) => {

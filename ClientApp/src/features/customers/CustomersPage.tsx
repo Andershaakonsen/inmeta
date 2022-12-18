@@ -13,21 +13,11 @@ const CustomersPage = () => {
 
   return (
     <div className="container mx-auto">
-      <div className="flex gap-2">
-        <Button
-          className="blue-border-int blue-bg-int rounded-md"
-          onClick={() => setShowCustomers(true)}
-        >
-          Show Customers
-        </Button>
-        <Button
-          className="blue-border-int blue-bg-int rounded-md"
-          onClick={() => setShowCustomers(false)}
-        >
-          Add Customer
-        </Button>
-      </div>
-      {showCustomers ? <CustomerList /> : <CustomerForm />}
+      {showCustomers ? (
+        <CustomerList setShowCustomers={setShowCustomers} />
+      ) : (
+        <CustomerForm setShowCustomers={setShowCustomers} />
+      )}
     </div>
   );
 };

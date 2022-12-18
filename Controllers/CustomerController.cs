@@ -39,4 +39,12 @@ public class CustomerController : ControllerBase
         int id = int.Parse(userId);
         return Ok(await _customerService.GetCustomers(id));
     }
+
+    [HttpDelete("{customerId}")]
+    public async Task<ActionResult<ServiceResponse<GetCustomerDto>>> DeleteCustomer(int customerId)
+    {
+        var userId = HttpContext.User.Claims.First(i => i.Type == ClaimTypes.NameIdentifier).Value;
+        int id = int.Parse(userId);
+        return Ok(await _customerService.DeleteCustomer(id, customerId));
+    }
 }

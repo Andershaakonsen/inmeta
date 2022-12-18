@@ -7,6 +7,8 @@ public class Order
     public string AddressTo { get; set; }
     public string ServiceType { get; set; }
     public DateTime Date { get; set; }
+    public string Email { get; set; }
+    public string PhoneNumber { get; set; }
     public string Note { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }

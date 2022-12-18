@@ -51,7 +51,6 @@ export const Login = () => {
   const Toast = useToast();
 
   const onSubmit = async (data: FormData) => {
-    console.log("Submitting data: " + data.email);
     const tokenResponse = await ofetch("/api/User/Login", {
       method: "POST",
       body: data,

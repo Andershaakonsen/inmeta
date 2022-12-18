@@ -10,6 +10,18 @@ export interface Customer {
   phoneNumber: string;
 }
 
+export interface Order {
+  id: string;
+  addressFrom: string;
+  addressTo: string;
+  serviceType: string;
+  phoneNumber: string;
+  email: string;
+  date: Date;
+  note: string;
+  customerId: string;
+}
+
 export interface ServiceResponse<T = unknown> {
   data: T;
   success: boolean;

@@ -14,6 +14,7 @@ builder.Services.AddDbContext<DataContext>(
 //Service
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 //JWT
 builder.Services
