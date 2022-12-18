@@ -3,6 +3,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { useToken } from "src/context/AuthContext";
 import { useToast } from "src/context/ToastContext";
 import { Customer, ServiceResponse } from "src/types/api";
+import { useFetchOrders } from "../orders/OrdersContext";
 import { useFetchCustomers } from "./CustomersContext";
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
 const CustomerItem = ({ customer }: Props) => {
   const Toast = useToast();
   const fetchCustomers = useFetchCustomers();
+  const fetchOrders = useFetchOrders();
   const token = useToken();
 
   const handleDelete = async () => {
@@ -31,6 +33,7 @@ const CustomerItem = ({ customer }: Props) => {
 
     Toast.success(response.message);
     fetchCustomers();
+    fetchOrders();
   };
   return (
     <li className=" text-radix-slate11 grid grid-cols-6 border-b w-full border-b-radix-blue7  text-md pb-2 mb-4 ">

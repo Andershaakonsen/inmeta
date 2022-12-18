@@ -33,6 +33,7 @@ const OrderForm = ({ setShowOrders }: Props) => {
   const { register, handleSubmit, watch, setValue, reset } = useForm<FormData>({
     defaultValues: {
       customerId: "",
+      serviceType: "moving",
     },
   });
 
@@ -113,7 +114,6 @@ const OrderForm = ({ setShowOrders }: Props) => {
         <select
           {...register("serviceType")}
           className="w-1/2 bg-radix-slate5 mt-2 h-10 outline-none"
-          value="moving"
         >
           <option value="moving">Moving</option>
           <option value="packing">Packing</option>

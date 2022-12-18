@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { ofetch } from "ofetch";
 import { useAuthContext } from "src/context/AuthContext";
 import { useToast } from "src/context/ToastContext";
+import { ServiceResponse } from "src/types/api";
+import { useNavigate } from "react-router-dom";
 
 const AuthPage = () => {
   const [displayLogin, setDisplayLogin] = useState(true);
@@ -47,24 +49,27 @@ export interface FormData {
 
 export const Login = () => {
   const { register, handleSubmit } = useForm<FormData>();
+  const navigate = useNavigate();
   const { setToken, setUser } = useAuthContext();
-  const Toast = useToast();
+  const toast = useToast();
 
   const onSubmit = async (data: FormData) => {
-    const tokenResponse = await ofetch("/api/User/Login", {
-      method: "POST",
-      body: data,
-    });
-    // console.log("Token Response:");
-    // console.log(tokenResponse.data);
-    // const userResponse = await ofetch("/api/User", {
-    //   headers: {
-    //     Authorization: `Bearer ${tokenResponse.data}`,
-    //   },
-    // });
-    // console.log("User Response:");
-    // console.log(userResponse.data);
-    setToken(tokenResponse.data);
+    try {
+      const tokenResponse = await ofetch<ServiceResponse<string>>(
+        "/api/User/Login",
+        {
+          method: "POST",
+          body: data,
+        }
+      );
+
+      if (!tokenResponse.success) throw tokenResponse;
+      setToken(tokenResponse.data);
+
+      navigate("/");
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   };
   return (
     <form
@@ -90,21 +95,24 @@ export const Login = () => {
 export const Register = () => {
   const { setToken } = useAuthContext();
   const { register, handleSubmit } = useForm<FormData>();
+  const navigate = useNavigate();
+  const toast = useToast();
   const onSubmit = async (data: FormData) => {
-    const response = await ofetch("/api/User/Register", {
-      method: "POST",
-      body: data,
-    });
-    // console.log(response.data);
+    try {
+      const response = await ofetch<ServiceResponse<string>>(
+        "/api/User/Register",
+        {
+          method: "POST",
+          body: data,
+        }
+      );
 
-    // const userResponse = await ofetch("/api/User", {
-    //   headers: {
-    //     Authorization: `Bearer ${response.data}`,
-    //   },
-    // });
-    // console.log(userResponse);
-
-    setToken(response.data);
+      if (!response.success) throw response;
+      setToken(response.data);
+      navigate("/");
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   };
   return (
     <form

@@ -33,7 +33,7 @@ const OrderEditForm = ({ order, setEdit }: Props) => {
   });
   const onSubmit = async (data: FormData) => {
     updateOrder(data);
-    setEdit(false);
+    setEdit(null);
   };
 
   return (
@@ -77,7 +77,6 @@ const OrderEditForm = ({ order, setEdit }: Props) => {
       <select
         {...register("serviceType")}
         className="w-1/2 bg-radix-slate5 mt-2 h-10 outline-none"
-        value="moving"
       >
         <option value="moving">Moving</option>
         <option value="packing">Packing</option>

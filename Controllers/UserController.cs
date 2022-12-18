@@ -35,7 +35,6 @@ public class UserController : ControllerBase
     public async Task<ActionResult<ServiceResponse<User>>> GetUser()
     {
         var userId = HttpContext.User.Claims.First(i => i.Type == ClaimTypes.NameIdentifier).Value;
-        System.Console.WriteLine(userId);
         return Ok(await _userService.GetUser(Int32.Parse(userId)));
     }
 }
